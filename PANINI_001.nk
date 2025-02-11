@@ -1,0 +1,199 @@
+#! C:/Program Files/Nuke16.0v1-Beta.4/nuke-16.0.1.dll -nx
+version 16.0 v1.267547b
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2559" h="1361" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1896" stretch="1"/>
+            <splitter orientation="2">
+                <split size="774"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="545"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+                <page id="Scenegraph.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/WORKSTATION/Desktop/PANINI_001.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ xpos 37
+ ypos -82
+}
+Reformat {
+ format "4096 2048 0 0 4096 2048 1 4K_LatLong"
+ filter impulse
+ name Reformat1
+ xpos 37
+ ypos 60
+}
+Group {
+ name PaniniProjection
+ xpos 37
+ ypos 191
+ addUserKnob {20 User l PaniniProjection}
+ addUserKnob {26 ""}
+ addUserKnob {41 fov l "FOV normalized" T FIT_LERP_FOV.input_num}
+ addUserKnob {41 eye l "EYE normalized" T FIT_LERP_EYE.input_num}
+ addUserKnob {26 ""}
+ addUserKnob {41 pan l "PAN normalized" T FIT_LERP_PAN.input_num}
+ addUserKnob {41 input_num l "VSH normalized" T FIT_LERP_VSH.input_num}
+ addUserKnob {26 ""}
+ addUserKnob {4 filter l FILTER M {BlackmanHarris Lanczos4 Lanczos6 Cubic Mitchell Keys Simon Rifman Parzen Gaussian "Sharp Gaussian" ""}}
+ filter "Sharp Gaussian"
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 301
+  ypos -70
+ }
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  fromInput2 {
+   {0}
+   B
+  }
+  name CHANNELCHECK
+  xpos 301
+  ypos 18
+ }
+ BlinkScript {
+  recompileCount 39
+  ProgramGroup 1
+  KernelDescription "3 \"PaniniProjection\" iterate pixelWise 24a719e89acbc6283af095c391a11c78f46ff57097bf4c1e0784a4dce0a73c08 2 \"src\" Read Random \"dst\" Write Point 5 \"FoV\" Float 1 AAAWQw== \"eye\" Float 1 AACAPw== \"pan\" Float 1 AAAAAA== \"vsh\" Float 1 AAAAAA== \"filter\" Int 1 AAAAAA== 5 \"FoV\" 1 1 Default \"eye\" 1 1 Default \"pan\" 1 1 Default \"vsh\" 1 1 Default \"filter\" 1 1 Default 13 \"pi\" Float 1 1 AAAAAA== \"Sppr\" Float 1 1 AAAAAA== \"d\" Float 1 1 AAAAAA== \"wfov\" Float 1 1 AAAAAA== \"Drpp\" Float 1 1 AAAAAA== \"width\" Float 1 1 AAAAAA== \"height\" Float 1 1 AAAAAA== \"W\" Float 1 1 AAAAAA== \"rcomp\" Bool 1 1 AA== \"weights\" Float 1 512 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \"wlut_size\" Int 1 1 AAAAAA== \"n\" Int 1 1 AAAAAA== \"range_compress\" Bool 1 1 AA=="
+  kernelSource "kernel PaniniProjection : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src;\n  Image<eWrite> dst;\n\n  param:\n    float FoV;\n    float eye;\n    float pan;\n    float vsh;\n   \n    // filtering\n    int filter;\n\n  local:\n    // universal constants\n    float pi;\n   \n    // panini\n    float Sppr;\n    float d;\n    float wfov;\n    float Drpp;\n   \n    // image related\n    float width;\n    float height;\n    float W;\n   \n    // filtering related\n    bool rcomp;\n    float weights\[512];\n    int wlut_size;\n    int n; // filter size\n    bool range_compress;\n\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(FoV, \"FoV\", 150.0f);\n    defineParam(eye, \"eye\", 1.0f);\n    defineParam(pan, \"pan\", 0.0f);\n    defineParam(vsh, \"vsh\", 0.0f);\n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    pi = 3.1415926f;\n    width = src.bounds.width();\n    height = src.bounds.height();\n    W = 2.0f;\n    Sppr = W / (2.0f * pi); // source pixels / radians\n    d = eye + 1.0f;\n    wfov = (pi * min(FoV, 160.0f * d)) / 180.0f; //radians\n    Drpp = 2.0f * d * tan(wfov / (2.0f * d)) / W; // destination coords in radians\n   \n    // filtering\n    // Set filter size based on filter parameter\n    // size of pixel neighborhood = n*2+1 by n*2+1\n    n = 2; // default size is 3x3 except the following...\n    if (filter == 0) n = 1; // Blackman-Harris = 2x2\n    if (filter == 3) n = 1; // Cubic = 2x2\n    if (filter == 2) n = 3; // Lanczos6 = 7x7\n    if (filter == 9) n = 1; // Gaussian4\n\n    rcomp = false;\n    // Pre-calculate interpolation weights and store them in a lookup table\n    wlut_size = 512; // Needs to match size of weights\[] array\n    // Loop over all indices of weights\n    for (int i=0; i < wlut_size; i++) \{\n      // Calc weight for position at weight\n      float x = float(i) * float(n) / float(wlut_size);\n      weights\[i] = weight(x);\n    \}\n  \}\n\n  // Logarithmically compress values above 0.18. Matches OpenImageIO oiiotool rangecompress\n  // Using log2shaper as this function can still cause overshoots\n  float rangecompress(float x, bool inverse) \{\n    float x1 = 0.18f;\n    float a = -0.54576885700225830078f;\n    float b = 0.18351669609546661377f;\n    float c = 284.3577880859375f;\n    float absx = fabs(x);\n    if (!inverse) \{\n      return absx <= x1 ? x : (a + b * log(fabs(c * absx + 1.0f))) * sign(x);\n    \} else \{\n      if (absx <= x1) return x;\n      float e = exp((absx - a) / b);\n      float _x = (e - 1.0f) / c;\n      if (_x < x1) _x = (-e - 1.0f) / c;\n      return _x * sign(x);\n    \}\n  \}\n\n  // ACEScct log transform\n  float acescct(float x, bool inverse) \{\n    if (inverse) \{\n      if (x > 0.155251141552511f) \{\n        return pow( 2.0f, x*17.52f - 9.72f);\n      \} else \{\n        return (x - 0.0729055341958355f) / 10.5402377416545f;\n      \}\n    \} else \{\n      if (x <= 0.0078125f) \{\n        return 10.5402377416545f * x + 0.0729055341958355f;\n      \} else \{\n        return (log2(x) + 9.72f) / 17.52f;\n      \}\n    \}\n  \}\n\n  // Generic Log2 shaper\n  float log2shaper(float x, bool inverse) \{\n    float max_exp = 2.0f;\n    float min_exp = -2.0f;\n    float mid_grey = 0.18f;\n    float cut = 0.008;\n    float slope = 1.0f/(log(2)*cut*(max_exp-min_exp));\n    float offset = (log(cut/mid_grey)/log(2)-min_exp)/(max_exp-min_exp);\n    if (inverse) \{\n      return x >= offset ? pow(2.0f, x*(max_exp-min_exp)+min_exp)*mid_grey : (x-offset)/slope+cut;\n    \} else \{\n      return x >= cut ? (log(x/mid_grey)/log(2)-min_exp)/(max_exp-min_exp) : slope*(x-cut)+offset;\n    \}\n  \}\n \n  // Bilinear Interpolation\n  float bilinear_filter(float x, float y, int k) \{\n    int u = floor(x);\n    int v = floor(y);\n    float a = x-u;\n    float b = y-v;\n    float p1 = src(u, v, k);\n    float p2 = src(u+1, v, k);\n    float p3 = src(u, v+1, k);\n    float p4 = src(u+1, v+1, k);\n    float r1 = p1 + a*(p2-p1);\n    float r2 = p3 + a*(p4-p3);\n    float r3 = r1 + b*(r2-r1);\n    return r3;\n  \}\n\n\n  // Gaussian interpolation https://renderman.pixar.com/resources/RenderMan_20/risOptions.html\n  float gaussian(float x, float w) \{\n    x = fabs(x);\n    float xw = 6*x/w;\n    return x < w ? exp(-2*xw*xw) : 0.0f;\n  \}\n\n  // Parameterized Cubic spline interpolation - https://www.desmos.com/calculator/il0lu3cnxr\n  float bicubic(float x, float a, float b, float n) \{\n    x = fabs(x);\n    if (x > n) return 0.0f;\n    float x2 = x*x;\n    float x3 = x*x*x;\n    return x < 1.0f ? ((-6*a-9*b+12)*x3+(6*a+12*b-18)*x2-2*b+6)/6 : x < 2.0f ? ((-6*a-b)*x3+(30*a+6*b)*x2+(-48*a-12*b)*x+24*a+8*b)/6 : 0.0f;\n  \}\n\n  // Catmull-Rom interpolation. Same as Keys (not used but included for posterity)\n  float catrom(float x) \{\n    x        = fabs(x);\n    float x2 = x * x;\n    float x3 = x * x2;\n    return (x >= 2.0f) ? 0.0f\n                       : ((x < 1.0f) ? (3.0f * x3 - 5.0f * x2 + 2.0f)/2.0f\n                       : (-x3 + 5.0f * x2 - 8.0f * x + 4.0f)/2.0f);\n  \}\n\n  // Lanczos windowed sinc interpolation.\n  // Lanczos4 a=2, Lanczos6 a=3\n  float lanczos(float x, float a) \{\n    x = fabs(x);\n    if (x > a) return 0.0f;\n    if (x < 0.0001f) return 1.0f;\n    float pi_x = pi*x;\n    return a*(sin(pi_x)*(sin((pi_x)/a))/(pi_x*pi_x));\n  \}\n\n  // Blackman-Harris interpolation\n  float blackman_harris(float x) \{\n    if (x < -1.0f || x > 1.0f) return 0.0f;\n    x /= 1.5f;\n    x = (x + 1.0f) * 0.5f;\n    const float a0   = 0.35875f;\n    const float a1   = -0.48829f;\n    const float a2   = 0.14128f;\n    const float a3   = 0.01168f;\n    float cos2pix = cos(2.0f * pi * x);\n    float cos4pix = 2.0f * cos2pix * cos2pix - 1.0f;\n    float cos6pix = cos2pix * (2.0f * cos4pix - 1.0f);\n    return a0 + a1 * cos2pix + a2 * cos4pix - a3 * cos6pix;\n  \}\n\n  float get_weight(float x) \{\n    // Calculate linear interpolation at float position x in lookup\n    float d = fabs(x)/n*wlut_size;\n    int d0 = floor(d);\n    int d1 = ceil(d);\n    return weights\[d0] + (d-d0) *(weights\[d1] - weights\[d0]);\n  \}\n\n  // Choose filter interpolation to weight value x\n  float weight(float x) \{\n    if (filter == 0) \{ // Blackman-Harris\n      return blackman_harris(x);\n    \} else if (filter == 1 || filter == 2) \{ // Lanczos\n      return lanczos(x, n);\n    \} else if (filter == 3) \{ // Cubic\n      return bicubic(x, 0.0f, 0.0f, n);\n    \} else if (filter == 4) \{ // Mitchell\n      return bicubic(x, 0.33333333f, 0.33333333f, n);\n    \} else if (filter == 5) \{ // Keys or Catmull-Rom\n      return catrom(x);\n    \} else if (filter == 6) \{ // Simon\n      return bicubic(x, 0.75f, 0.0f, n);\n    \} else if (filter == 7) \{ // Rifman\n      return bicubic(x, 1.0f, 0.0f, n);\n    \} else if (filter == 8) \{ // Parzen\n      return bicubic(x, 0.0f, 1.0f, n);\n    \} else if (filter == 9) \{ // Gaussian\n      return gaussian(x, 6);\n    \} else if (filter == 10) \{ // Sharp Gaussian\n      return gaussian(x, 4.25f);\n    \} else \{ // Default\n      return blackman_harris(x);\n    \}\n  \}\n \n \n  // Sample pixel at continuous float position (x, y) in channel k\n  float sample(float x, float y, int k) \{\n    int u0 = round(x); // nearest x\n    int v0 = round(y); // nearest y\n\n    // Normalization factor for lanczos & blackman-harris & gaussian filter windows\n    // These weighting functions do not sum to 1 and cause variations in constant input values\n    // We sum the weights and then normalize the value after to counteract this\n    bool normalize = (filter < 3 || filter == 9 || filter == 10);\n    float norm = 0.0f;\n\n    // Loop over neighboring pixels and return weighted sum of pixel values\n    float q = 0.0f;\n    for (int j = -n; j <= n; j++) \{\n      int v = v0 + j;\n      float p = 0.0f;\n      float row_norm = 0.0f;\n      for (int i = -n; i <= n; i++) \{\n        int u = u0 + i;\n        float c = src(u, v, k);\n        // float w = weight(u-x);\n        float w = get_weight(u-x);\n        if (rcomp) c = log2shaper(c, 0);\n        p += c * w;\n        if (normalize) row_norm += w;\n      \}\n      // float w = weight(v-y);\n      float w = get_weight(v-y);\n      q += p * w;\n      if (normalize) norm += row_norm * w;\n    \}\n    if (normalize) q /= norm;\n    if (rcomp) return log2shaper(q, 1);\n    return q;\n  \}\n \n  void process(int2 pos) \{\n    // convert from pixel coords to NDC for mathmap code\n    float x = (pos.x / width) * 2.0f - 1.0f;\n    float y = (pos.y / height) * 2.0f - 1.0f;\n\n    float xr = x * Drpp;\n    float yr = (y - 2.0f * vsh) * Drpp;\n   \n    float azi = d * atan2(xr, d);\n    float alt = atan2(yr * (eye + cos(azi)), d);\n   \n    float sx = Sppr * azi;\n    float sy = Sppr * alt;\n   \n    sx = sx + width * pan / 360.0f;\n    if (sx > 1.0f) \{\n      sx = sx - W;\n    \} else if (sx < -1.0f) \{\n      sx = sx + W;\n    \}\n   \n    sx = ((sx + 1.0f) * 0.5f) * width;\n    sy = ((sy + 1.0f) * 0.5f) * height;\n   \n    float4 out;\n   \n    out\[0] = sample(sx, sy, 0);\n    out\[1] = sample(sx, sy, 1);\n    out\[2] = sample(sx, sy, 2);\n    out\[3] = sample(sx, sy, 3);\n   \n    dst() = out;\n  \}\n\};"
+  rebuild ""
+  PaniniProjection_FoV {{parent.FIT_LERP_FOV.output}}
+  PaniniProjection_eye {{parent.FIT_LERP_EYE.output}}
+  PaniniProjection_pan {{parent.FIT_LERP_PAN.output}}
+  PaniniProjection_vsh {{parent.FIT_LERP_VSH.output}}
+  PaniniProjection_filter {{PaniniProjection.filter}}
+  rebuild_finalise ""
+  name PaniniProjection1
+  xpos 301
+  ypos 162
+ }
+ Output {
+  name Output1
+  xpos 301
+  ypos 269
+ }
+ NoOp {
+  inputs 0
+  name FIT_LERP_FOV
+  xpos 63
+  ypos 165
+  addUserKnob {20 User}
+  addUserKnob {7 input_num l "Input Number:"}
+  input_num 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 orig_min l "Orig Min:"}
+  addUserKnob {7 orig_max l "Orig Max" -STARTLINE}
+  orig_max 1
+  addUserKnob {26 ""}
+  addUserKnob {7 new_min l "New Min"}
+  addUserKnob {7 new_max l "New Max" -STARTLINE}
+  new_max 320
+  addUserKnob {26 ""}
+  addUserKnob {7 output l "Output number:"}
+  output {{"lerp(orig_min, new_min, orig_max, new_max, input_num)"}}
+ }
+ NoOp {
+  inputs 0
+  name FIT_LERP_EYE
+  xpos 104
+  ypos 32
+  addUserKnob {20 User}
+  addUserKnob {7 input_num l "Input Number:" R 0 0.5}
+  addUserKnob {26 ""}
+  addUserKnob {7 orig_min l "Orig Min:"}
+  addUserKnob {7 orig_max l "Orig Max" -STARTLINE}
+  orig_max 1
+  addUserKnob {26 ""}
+  addUserKnob {7 new_min l "New Min"}
+  new_min 1
+  addUserKnob {7 new_max l "New Max" -STARTLINE}
+  new_max 100
+  addUserKnob {26 ""}
+  addUserKnob {7 output l "Output number:"}
+  output {{"lerp(orig_min, new_min, orig_max, new_max, input_num)"}}
+ }
+ NoOp {
+  inputs 0
+  name FIT_LERP_PAN
+  xpos 507
+  ypos 55
+  addUserKnob {20 User}
+  addUserKnob {7 input_num l "Input Number:"}
+  input_num 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 orig_min l "Orig Min:"}
+  addUserKnob {7 orig_max l "Orig Max" -STARTLINE}
+  orig_max 1
+  addUserKnob {26 ""}
+  addUserKnob {7 new_min l "New Min"}
+  new_min -0.18
+  addUserKnob {7 new_max l "New Max" -STARTLINE}
+  new_max 0.18
+  addUserKnob {26 ""}
+  addUserKnob {7 output l "Output number:"}
+  output {{"lerp(orig_min, new_min, orig_max, new_max, input_num)"}}
+ }
+ NoOp {
+  inputs 0
+  name FIT_LERP_VSH
+  xpos 578
+  ypos 154
+  addUserKnob {20 User}
+  addUserKnob {7 input_num l "Input Number:"}
+  input_num 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 orig_min l "Orig Min:"}
+  addUserKnob {7 orig_max l "Orig Max" -STARTLINE}
+  orig_max 1
+  addUserKnob {26 ""}
+  addUserKnob {7 new_min l "New Min"}
+  new_min -0.5
+  addUserKnob {7 new_max l "New Max" -STARTLINE}
+  new_max 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 output l "Output number:"}
+  output {{"lerp(orig_min, new_min, orig_max, new_max, input_num)"}}
+ }
+end_group
